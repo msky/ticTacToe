@@ -6,10 +6,11 @@ class Game {
 
     private String id;
 
-    private Board board = new Board();
+    private Board board;
 
-    Game(String id) {
+    Game(String id, int columns, int rows) {
         this.id = id;
+        board = new Board(columns, rows);
     }
 
     GameDTO dto() {

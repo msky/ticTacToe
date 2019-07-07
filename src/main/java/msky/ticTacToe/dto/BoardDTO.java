@@ -13,6 +13,10 @@ public class BoardDTO {
 
     private List<FieldDTO> fields;
 
+    private int columns;
+
+    private int rows;
+
     public boolean isEmpty() {
         return fields == null || fields.isEmpty();
     }

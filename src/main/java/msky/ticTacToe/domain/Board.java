@@ -11,10 +11,22 @@ import java.util.stream.Collectors;
 
 class Board {
 
+    private int columns;
+
+    private int rows;
+
     private Fields fields = new Fields();
 
+    Board(int columns, int rows) {
+        this.columns = columns;
+        this.rows = rows;
+    }
+
     BoardDTO dto() {
-        return BoardDTO.builder().fields(fields.dto()).build();
+        return BoardDTO.builder()
+                .columns(columns)
+                .rows(rows)
+                .fields(fields.dto()).build();
     }
 
 }
