@@ -1,16 +1,22 @@
 package msky.ticTacToe.domain;
 
+import lombok.AllArgsConstructor;
 import msky.ticTacToe.dto.GameDTO;
 
+@AllArgsConstructor
 public class GameFacade {
 
     private GameFactory factory;
 
-    GameFacade(GameFactory factory) {
-        this.factory = factory;
-    }
+    private GameRepository gameRepository;
 
     public GameDTO createNewGame() {
-        return this.factory.createStandardGame().dto();
+        Game newGame = this.factory.createStandardGame();
+        return gameRepository.save(newGame).dto();
+    }
+
+    public GameDTO load(String gameId) {
+        // TODO: findOrThrow?
+        return gameRepository.findById(gameId).dto();
     }
 }

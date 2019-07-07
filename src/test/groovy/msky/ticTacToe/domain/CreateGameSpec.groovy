@@ -13,4 +13,11 @@ class CreateGameSpec extends Specification {
         then: "no field is marked"
             game.getBoard().isEmpty()
     }
+
+    def "created game is available to read"() {
+        when: "we create a new game"
+            GameDTO game = facade.createNewGame()
+        then: "game is available to read"
+            game == facade.load(game.getId())
+    }
 }
