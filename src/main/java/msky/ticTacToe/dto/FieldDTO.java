@@ -1,12 +1,15 @@
 package msky.ticTacToe.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@Builder
+@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 public class FieldDTO {
 
+    private int column;
+
+    private int row;
 }

@@ -25,4 +25,10 @@ class Game {
                 .nextPlayer(players.checkNext().dto())
                 .build();
     }
+
+    void make(Move move) {
+        Field field = move.getMarkedField();
+        Symbol Symbol = move.madeWith();
+        board.mark(field, Symbol);
+    }
 }

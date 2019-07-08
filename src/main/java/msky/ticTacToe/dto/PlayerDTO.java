@@ -10,4 +10,6 @@ import lombok.Getter;
 public class PlayerDTO {
 
     private String id;
+
+    private SymbolDTO playingWith;
 }

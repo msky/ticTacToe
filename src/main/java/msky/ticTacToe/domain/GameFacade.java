@@ -2,6 +2,7 @@ package msky.ticTacToe.domain;
 
 import lombok.AllArgsConstructor;
 import msky.ticTacToe.dto.GameDTO;
+import msky.ticTacToe.dto.MoveDTO;
 import msky.ticTacToe.dto.PlayerDTO;
 
 import java.util.List;
@@ -21,5 +22,11 @@ public class GameFacade {
     public GameDTO load(String gameId) {
         // TODO: findOrThrow?
         return gameRepository.findById(gameId).dto();
+    }
+
+    public void make(MoveDTO move) {
+        Game game = gameRepository.findById(move.getGameId());
+        game.make(Move.fromDto(move));
+        gameRepository.save(game);
     }
 }

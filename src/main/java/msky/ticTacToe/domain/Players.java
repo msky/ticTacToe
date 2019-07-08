@@ -27,7 +27,17 @@ class Player {
 
     private String id;
 
+    private Symbol playingWith;
+
     PlayerDTO dto() {
-        return new PlayerDTO(id);
+        return new PlayerDTO(id, playingWith.dto());
+    }
+
+    Symbol playingWith() {
+        return playingWith;
+    }
+
+    static Player fromDto(PlayerDTO dto) {
+        return new Player(dto.getId(), Symbol.fromDTO(dto.getPlayingWith()));
     }
 }

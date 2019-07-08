@@ -1,11 +1,13 @@
 package msky.ticTacToe.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import msky.ticTacToe.dto.BoardDTO;
 import msky.ticTacToe.dto.FieldDTO;
+import msky.ticTacToe.dto.MarkDTO;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,7 +17,7 @@ class Board {
 
     private int rows;
 
-    private Fields fields = new Fields();
+    private Marks marks = new Marks();
 
     Board(int columns, int rows) {
         this.columns = columns;
@@ -26,24 +28,47 @@ class Board {
         return BoardDTO.builder()
                 .columns(columns)
                 .rows(rows)
-                .fields(fields.dto()).build();
+                .marks(marks.dto()).build();
     }
 
+    void mark(Field field, Symbol symbol) {
+        marks.addOn(field, symbol);
+    }
 }
 
-class Fields {
-    private Map<Field, Symbol> markedFields = new HashMap<>();
+class Marks {
+    private Map<Field, Symbol> marks = new HashMap<>();
 
-    List<FieldDTO> dto() {
-        return markedFields.entrySet().stream()
+    Collection<MarkDTO> dto() {
+        return marks.entrySet().stream()
                 .map(
-                        markedField -> FieldDTO.builder().build()
+                        markedField -> MarkDTO.builder()
+                                .on(markedField.getKey().dto())
+                                .with(markedField.getValue().dto())
+                                .build()
                 )
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
+    }
+
+    void addOn(Field field, Symbol symbol) {
+        marks.put(field, symbol);
     }
 }
 
+@AllArgsConstructor
 @EqualsAndHashCode
 class Field {
+
+    private int column;
+
+    private int row;
+
+    FieldDTO dto() {
+        return new FieldDTO(column, row);
+    }
+
+    static Field fromDto(FieldDTO dto) {
+        return new Field(dto.getColumn(), dto.getRow());
+    }
 
 }

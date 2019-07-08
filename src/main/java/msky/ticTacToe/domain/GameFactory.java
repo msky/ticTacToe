@@ -19,8 +19,9 @@ class GameFactory {
         return new Game(idGenerator.generate(),
                 DEFAULT_COLUMNS,
                 DEFAULT_ROWS,
-                players.stream().map(dto -> new Player(dto.getId())).collect(Collectors.toList())
-                );
+                players.stream().map(Player::fromDto)
+                        .collect(Collectors.toList())
+        );
     }
 
 }
