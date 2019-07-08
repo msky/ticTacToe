@@ -1,6 +1,10 @@
 package msky.ticTacToe.domain;
 
 import lombok.AllArgsConstructor;
+import msky.ticTacToe.dto.PlayerDTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 class GameFactory {
@@ -11,10 +15,11 @@ class GameFactory {
 
     private IdGenerator idGenerator;
 
-    Game createStandardGame() {
+    Game createStandardGame(List<PlayerDTO> players) {
         return new Game(idGenerator.generate(),
                 DEFAULT_COLUMNS,
-                DEFAULT_ROWS
+                DEFAULT_ROWS,
+                players.stream().map(dto -> new Player(dto.getId())).collect(Collectors.toList())
                 );
     }
 

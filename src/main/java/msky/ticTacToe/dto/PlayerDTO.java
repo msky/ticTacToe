@@ -1,17 +1,13 @@
 package msky.ticTacToe.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@Builder
+@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class GameDTO {
+public class PlayerDTO {
 
     private String id;
-
-    private BoardDTO board;
-
-    private PlayerDTO nextPlayer;
 }

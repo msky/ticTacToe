@@ -2,6 +2,9 @@ package msky.ticTacToe.domain;
 
 import lombok.AllArgsConstructor;
 import msky.ticTacToe.dto.GameDTO;
+import msky.ticTacToe.dto.PlayerDTO;
+
+import java.util.List;
 
 @AllArgsConstructor
 public class GameFacade {
@@ -10,8 +13,8 @@ public class GameFacade {
 
     private GameRepository gameRepository;
 
-    public GameDTO createNewGame() {
-        Game newGame = this.factory.createStandardGame();
+    public GameDTO createNewGame(List<PlayerDTO> players) {
+        Game newGame = this.factory.createStandardGame(players);
         return gameRepository.save(newGame).dto();
     }
 
