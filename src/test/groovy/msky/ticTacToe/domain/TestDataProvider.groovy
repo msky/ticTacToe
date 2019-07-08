@@ -5,15 +5,10 @@ import msky.ticTacToe.dto.PlayerDTO
 class TestDataProvider {
 
     List<PlayerDTO> samplePlayers() {
-        List<PlayerDTO> players = of(player("player1"), player("player2"))
-        players
+        [player("player1"), player("player2")]
     }
 
-    private player(String id) {
+    private PlayerDTO player(String id) {
         new PlayerDTO(id)
-    }
-
-    private of(PlayerDTO... player) {
-        Arrays.asList(player)
     }
 }
