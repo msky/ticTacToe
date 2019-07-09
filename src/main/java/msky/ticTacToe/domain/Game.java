@@ -26,9 +26,9 @@ class Game {
                 .build();
     }
 
-    void make(Move move) {
-        Field field = move.getMarkedField();
-        Symbol Symbol = move.madeWith();
-        board.mark(field, Symbol);
+    MoveResult make(Move move) {
+        board.mark(move.getMarkedField(), move.madeWith());
+        players.switchTurn();
+        return MoveResult.builder().nextPlayer(players.checkNext()).build();
     }
 }

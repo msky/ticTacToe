@@ -5,11 +5,11 @@ import msky.ticTacToe.dto.SymbolDTO
 
 class TestDataProvider {
 
-    List<PlayerDTO> samplePlayers() {
-        [player("player1", SymbolDTO.X), player("player2", SymbolDTO.O)]
-    }
+    PlayerDTO playerX = new PlayerDTO("player1", SymbolDTO.X)
 
-    private PlayerDTO player(String id, SymbolDTO symbol) {
-        new PlayerDTO(id, symbol);
+    PlayerDTO playerO = new PlayerDTO("player2", SymbolDTO.O)
+
+    List<PlayerDTO> samplePlayers() {
+        [playerX, playerO]
     }
 }

@@ -19,6 +19,10 @@ class Players {
     Player checkNext() {
         return queue.peek();
     }
+
+    void switchTurn() {
+        queue.add(queue.poll());
+    }
 }
 
 @AllArgsConstructor
