@@ -60,6 +60,30 @@ class MakingMoveSpec extends Specification {
             secondPlayer == moveResult.nextPlayer
     }
 
+    def "player cannot make 2 moves in a row"() {
+        given: "a new game"
+            PlayerDTO firstPlayer = testData.playerX
+            PlayerDTO secondPlayer = testData.playerO
+            GameDTO game = createSample3x3Game([firstPlayer, secondPlayer])
+        when: "move is made by first player twice "
+            MoveDTO firstMove = MoveDTO.builder()
+                .gameId(game.id)
+                .madeBy(firstPlayer)
+                .markedField(new FieldDTO(0, 0))
+                .build()
+            facade.make(firstMove)
+
+
+            MoveDTO secondMove = MoveDTO.builder()
+                .gameId(game.id)
+                .madeBy(firstPlayer)
+                .markedField(new FieldDTO(1, 0))
+                .build()
+            facade.make(secondMove)
+        then: "an exception is thrown"
+            thrown IllegalMoveException
+    }
+
     private GameDTO createSample3x3Game(List<PlayerDTO> players = testData.samplePlayers()) {
         facade.createNewGame(players)
     }

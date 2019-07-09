@@ -23,6 +23,10 @@ class Players {
     void switchTurn() {
         queue.add(queue.poll());
     }
+
+    public boolean isNext(Player player) {
+        return checkNext().equals(player);
+    }
 }
 
 @AllArgsConstructor

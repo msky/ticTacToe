@@ -27,6 +27,9 @@ class Game {
     }
 
     MoveResult make(Move move) {
+        if (players.isNext(move.isMadeBy()) == false) {
+            throw new IllegalMoveException("It's not your turn!");
+        }
         board.mark(move.getMarkedField(), move.madeWith());
         players.switchTurn();
         return MoveResult.builder().nextPlayer(players.checkNext()).build();

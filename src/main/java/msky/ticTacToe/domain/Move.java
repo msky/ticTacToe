@@ -21,6 +21,8 @@ class Move {
         return madeBy.playingWith();
     }
 
+    Player isMadeBy() { return madeBy;}
+
     static Move fromDto(MoveDTO dto) {
         return new Move(Player.fromDto(dto.getMadeBy()), Field.fromDto(dto.getMarkedField()));
     }
