@@ -34,6 +34,10 @@ class Board {
     void mark(Field field, Symbol symbol) {
         marks.addOn(field, symbol);
     }
+
+    boolean isMarked(Field field) {
+        return marks.contains(field);
+    }
 }
 
 class Marks {
@@ -52,6 +56,10 @@ class Marks {
 
     void addOn(Field field, Symbol symbol) {
         marks.put(field, symbol);
+    }
+
+    boolean contains(Field field) {
+        return marks.containsKey(field);
     }
 }
 

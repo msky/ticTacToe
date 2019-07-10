@@ -84,6 +84,30 @@ class MakingMoveSpec extends Specification {
             thrown IllegalMoveException
     }
 
+    def "move cannot be made on already marked field"() {
+        given: "game with one marked field"
+            PlayerDTO firstPlayer = testData.playerX
+            PlayerDTO secondPlayer = testData.playerO
+            GameDTO game = createSample3x3Game([firstPlayer, secondPlayer])
+
+            FieldDTO field = new FieldDTO(0, 0)
+            MoveDTO firstMove = MoveDTO.builder()
+                .gameId(game.id)
+                .madeBy(firstPlayer)
+                .markedField(field)
+                .build()
+            facade.make(firstMove)
+        when: "second player is trying to mark already marked field"
+            MoveDTO secondMove = MoveDTO.builder()
+                    .gameId(game.id)
+                    .madeBy(secondPlayer)
+                    .markedField(field)
+                    .build()
+            facade.make(secondMove)
+        then: "an exception is thrown"
+            thrown IllegalMoveException
+    }
+
     private GameDTO createSample3x3Game(List<PlayerDTO> players = testData.samplePlayers()) {
         facade.createNewGame(players)
     }

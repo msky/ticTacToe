@@ -30,6 +30,9 @@ class Game {
         if (players.isNext(move.isMadeBy()) == false) {
             throw new IllegalMoveException("It's not your turn!");
         }
+        if (board.isMarked(move.getMarkedField())) {
+            throw new IllegalMoveException("Field already marked!");
+        }
         board.mark(move.getMarkedField(), move.madeWith());
         players.switchTurn();
         return MoveResult.builder().nextPlayer(players.checkNext()).build();
