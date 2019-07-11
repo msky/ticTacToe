@@ -16,12 +16,23 @@ class GameFactory {
     private IdGenerator idGenerator;
 
     Game createStandardGame(List<PlayerDTO> players) {
+
+        if (isOnePlayerPerSymbol(players) == false) {
+            throw new IllegalSetupException("Players should pick unique symbols!");
+        }
         return new Game(idGenerator.generate(),
                 DEFAULT_COLUMNS,
                 DEFAULT_ROWS,
                 players.stream().map(Player::fromDto)
                         .collect(Collectors.toList())
         );
+    }
+
+    private boolean isOnePlayerPerSymbol(List<PlayerDTO> players) {
+        return players.stream()
+                .map(PlayerDTO::getPlayingWith)
+                .distinct()
+                .count() == players.size();
     }
 
 }

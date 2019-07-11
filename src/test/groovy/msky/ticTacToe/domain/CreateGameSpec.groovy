@@ -2,6 +2,7 @@ package msky.ticTacToe.domain
 
 import msky.ticTacToe.dto.GameDTO
 import msky.ticTacToe.dto.PlayerDTO
+import msky.ticTacToe.dto.SymbolDTO
 import spock.lang.Specification
 
 class CreateGameSpec extends Specification {
@@ -32,6 +33,16 @@ class CreateGameSpec extends Specification {
             GameDTO game = facade.createNewGame(players)
         then: "first player on a given list moves first"
             game.getNextPlayer() == firstPlayer
+    }
+
+    def "multiple players cannot play with same symbol"() {
+        given: "with two players playing with same symbol"
+            PlayerDTO firstPlayerWithX = new PlayerDTO("player1", SymbolDTO.X)
+            PlayerDTO secondPlayerWithX = new PlayerDTO("player2", SymbolDTO.X)
+        when: "we create a new game"
+            facade.createNewGame([firstPlayerWithX, secondPlayerWithX])
+        then: "an exception is thrown"
+            thrown IllegalSetupException
     }
 
     private List<PlayerDTO> players() {
