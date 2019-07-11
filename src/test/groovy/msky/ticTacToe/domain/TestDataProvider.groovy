@@ -9,6 +9,8 @@ class TestDataProvider {
 
     PlayerDTO playerO = new PlayerDTO("player2", SymbolDTO.O)
 
+    PlayerDTO playerTriangle = new PlayerDTO("player3", SymbolDTO.TRIANGLE)
+
     List<PlayerDTO> samplePlayers() {
         [playerX, playerO]
     }

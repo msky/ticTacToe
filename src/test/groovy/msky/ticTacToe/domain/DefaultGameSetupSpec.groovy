@@ -1,10 +1,12 @@
 package msky.ticTacToe.domain
 
 import msky.ticTacToe.dto.GameDTO
+import spock.lang.Shared
 import spock.lang.Specification
 
 class DefaultGameSetupSpec extends Specification {
 
+    @Shared
     TestDataProvider testData = new TestDataProvider()
 
     GameFacade facade = new GameConfiguration().gameFacade()
@@ -16,6 +18,18 @@ class DefaultGameSetupSpec extends Specification {
         then: "created board got 3 rows and 3 columns"
             game.board.columns == 3
             game.board.rows == 3
+    }
+
+    def "default game cannot be created for players number different than 2"() {
+        when: "creating game with number of players != 2"
+            facade.createNewGame(players)
+        then: "an exception is thrown"
+            thrown IllegalSetupException
+        where:
+            players << [
+            [testData.playerO],
+            [],
+            [testData.playerO, testData.playerX, testData.playerTriangle]]
     }
 
     private GameDTO createSampleGame() {

@@ -1,5 +1,5 @@
 package msky.ticTacToe.dto;
 
 public enum SymbolDTO {
-    X, O
+    X, O, TRIANGLE
 }

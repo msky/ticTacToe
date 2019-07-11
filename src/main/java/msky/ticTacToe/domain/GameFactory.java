@@ -13,13 +13,21 @@ class GameFactory {
 
     private static int DEFAULT_ROWS = 3;
 
+    private static int DEFAULT_PLAYERS = 2;
+
     private IdGenerator idGenerator;
 
     Game createStandardGame(List<PlayerDTO> players) {
 
+        // TODO extract default config with validation to separate class
         if (isOnePlayerPerSymbol(players) == false) {
             throw new IllegalSetupException("Players should pick unique symbols!");
         }
+
+        if (DEFAULT_PLAYERS != players.size()) {
+            throw new IllegalSetupException("Standard game can only be played by 2 players!");
+        }
+
         return new Game(idGenerator.generate(),
                 DEFAULT_COLUMNS,
                 DEFAULT_ROWS,
