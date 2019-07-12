@@ -22,7 +22,7 @@ class Game {
         return GameDTO.builder()
                 .board(board.dto())
                 .id(id)
-                .nextPlayer(players.checkNext().dto())
+                .turns(players.currentTurnsOrder())
                 .build();
     }
 

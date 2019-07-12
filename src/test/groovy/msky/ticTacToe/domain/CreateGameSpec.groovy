@@ -28,11 +28,11 @@ class CreateGameSpec extends Specification {
     def "game holds given order of players"() {
         given: "with defined list of players"
             List<PlayerDTO> players = players()
-            PlayerDTO firstPlayer = players.get(0)
+            PlayerDTO firstPlayer = players[0]
         when: "we create a new game"
             GameDTO game = facade.createNewGame(players)
         then: "first player on a given list moves first"
-            game.getNextPlayer() == firstPlayer
+            game.turns[0] == firstPlayer
     }
 
     def "multiple players cannot play with same symbol"() {

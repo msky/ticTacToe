@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.List;
+
 @Builder
 @Getter
 @EqualsAndHashCode
@@ -13,5 +15,5 @@ public class GameDTO {
 
     private BoardDTO board;
 
-    private PlayerDTO nextPlayer;
+    private List<PlayerDTO> turns;
 }

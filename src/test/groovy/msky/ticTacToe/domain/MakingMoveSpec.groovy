@@ -1,11 +1,6 @@
 package msky.ticTacToe.domain
 
-import msky.ticTacToe.dto.FieldDTO
-import msky.ticTacToe.dto.GameDTO
-import msky.ticTacToe.dto.MarkDTO
-import msky.ticTacToe.dto.MoveDTO
-import msky.ticTacToe.dto.MoveResultDTO
-import msky.ticTacToe.dto.PlayerDTO
+import msky.ticTacToe.dto.*
 import spock.lang.Specification
 
 class MakingMoveSpec extends Specification {
@@ -17,7 +12,7 @@ class MakingMoveSpec extends Specification {
     def "first mark can be placed anywhere on the board"() {
         given: "move on any field of new game with empty board"
             GameDTO game = createSample3x3Game()
-            PlayerDTO nextPlayer = game.nextPlayer
+            PlayerDTO nextPlayer = game.turns[0]
             FieldDTO field = new FieldDTO(column, row)
             MoveDTO move = MoveDTO.builder()
                             .gameId(game.id)
@@ -51,13 +46,15 @@ class MakingMoveSpec extends Specification {
             PlayerDTO secondPlayer = testData.playerO
             GameDTO game = createSample3x3Game([firstPlayer, secondPlayer])
         when: "move is made by first player "
-            MoveResultDTO moveResult = facade.make(MoveDTO.builder()
+            facade.make(MoveDTO.builder()
                         .gameId(game.id)
                         .madeBy(firstPlayer)
                         .markedField(new FieldDTO(0,0))
                         .build())
         then: "second player moves next"
-            secondPlayer == moveResult.nextPlayer
+            List<PlayerDTO> turns = facade.load(game.id).turns
+            PlayerDTO nextPlayer = turns[0]
+            secondPlayer == nextPlayer
     }
 
     def "player cannot make 2 moves in a row"() {
@@ -72,7 +69,6 @@ class MakingMoveSpec extends Specification {
                 .markedField(new FieldDTO(0, 0))
                 .build()
             facade.make(firstMove)
-
 
             MoveDTO secondMove = MoveDTO.builder()
                 .gameId(game.id)

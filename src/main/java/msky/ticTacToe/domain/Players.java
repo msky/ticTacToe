@@ -7,6 +7,7 @@ import msky.ticTacToe.dto.PlayerDTO;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 class Players {
 
@@ -24,8 +25,12 @@ class Players {
         queue.add(queue.poll());
     }
 
-    public boolean isNext(Player player) {
+    boolean isNext(Player player) {
         return checkNext().equals(player);
+    }
+
+    List<PlayerDTO> currentTurnsOrder() {
+        return queue.stream().map(Player::dto).collect(Collectors.toList());
     }
 }
 
