@@ -2,6 +2,9 @@ package msky.ticTacToe.domain;
 
 import msky.ticTacToe.dto.GameDTO;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 class Game {
@@ -12,10 +15,13 @@ class Game {
 
     private Players players;
 
-    Game(String id, int columns, int rows, List<Player> players) {
+    private Collection<WinCondition> winConditions;
+
+    Game(String id, int columns, int rows, List<Player> players, Collection<WinCondition> winConditions) {
         this.id = id;
         this.board = new Board(columns, rows);
         this.players = new Players(players);
+        this.winConditions = new ArrayList<>(winConditions);
     }
 
     GameDTO dto() {
@@ -34,7 +40,14 @@ class Game {
             throw new IllegalMoveException("Field already marked!");
         }
         board.mark(move.getMarkedField(), move.madeWith());
-        players.switchTurn();
-        return MoveResult.builder().nextPlayer(players.checkNext()).build();
+
+        // TODO: we can check the win conditions only for last marked field
+        if (board.meetAny(winConditions)) {
+            return MoveResult.WIN;
+        } else {
+            players.switchTurn();
+            return MoveResult.NEXT_TURN;
+        }
+
     }
 }

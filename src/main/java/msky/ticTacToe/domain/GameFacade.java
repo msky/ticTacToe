@@ -27,8 +27,8 @@ public class GameFacade {
 
     public MoveResultDTO make(MoveDTO move) {
         Game game = gameRepository.findById(move.getGameId());
-        MoveResult moveResult = game.make(Move.fromDto(move));
+        MoveResult result = game.make(Move.fromDto(move));
         gameRepository.save(game);
-        return moveResult.dto();
+        return result.dto();
     }
 }

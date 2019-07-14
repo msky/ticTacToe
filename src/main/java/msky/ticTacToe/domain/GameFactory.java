@@ -3,6 +3,7 @@ package msky.ticTacToe.domain;
 import lombok.AllArgsConstructor;
 import msky.ticTacToe.dto.PlayerDTO;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +33,8 @@ class GameFactory {
                 DEFAULT_COLUMNS,
                 DEFAULT_ROWS,
                 players.stream().map(Player::fromDto)
-                        .collect(Collectors.toList())
-        );
+                        .collect(Collectors.toList()),
+                Arrays.asList(new VerticalLineDownsideDirection(3)));
     }
 
     private boolean isOnePlayerPerSymbol(List<PlayerDTO> players) {

@@ -29,13 +29,10 @@ class Move {
 
 }
 
-@Builder
-@Getter
-class MoveResult {
+enum MoveResult {
+    NEXT_TURN, WIN;
 
-    private Player nextPlayer;
-
-    MoveResultDTO dto() {
-        return MoveResultDTO.builder().nextPlayer(nextPlayer.dto()).build();
+    public MoveResultDTO dto() {
+        return MoveResultDTO.valueOf(name());
     }
 }

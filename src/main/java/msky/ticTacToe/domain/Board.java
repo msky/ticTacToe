@@ -2,6 +2,7 @@ package msky.ticTacToe.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import msky.ticTacToe.dto.BoardDTO;
 import msky.ticTacToe.dto.FieldDTO;
 import msky.ticTacToe.dto.MarkDTO;
@@ -9,6 +10,7 @@ import msky.ticTacToe.dto.MarkDTO;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class Board {
@@ -38,6 +40,10 @@ class Board {
     boolean isMarked(Field field) {
         return marks.contains(field);
     }
+
+    boolean meetAny(Collection<WinCondition> winConditions) {
+        return marks.meetAny(winConditions);
+    }
 }
 
 class Marks {
@@ -61,10 +67,32 @@ class Marks {
     boolean contains(Field field) {
         return marks.containsKey(field);
     }
+
+    boolean meetAny(Collection<WinCondition> winConditions) {
+        return winConditions.stream()
+                .anyMatch(winCondition -> isAnyCombinationForConditionAvailable(winCondition));
+    }
+
+    private boolean isAnyCombinationForConditionAvailable(WinCondition winCondition) {
+        return marks.entrySet().stream()
+                .anyMatch(mark ->
+                        isAnyCombinationAvailable(winCondition.getWinningCombinationsFor(mark.getKey()), mark.getValue()));
+    }
+
+    private boolean isAnyCombinationAvailable(Collection<Collection<Field>> winCombinations, Symbol symbol) {
+        Collection<Field> markedFields = marks.keySet();
+        return winCombinations.stream().anyMatch(combination -> markedFields.containsAll(combination) &&
+                allFieldsAreMarkedBy(combination, symbol));
+    }
+
+    private boolean allFieldsAreMarkedBy(Collection<Field> fields, Symbol symbol) {
+        return fields.stream().allMatch(field -> marks.get(field) == symbol);
+    }
 }
 
 @AllArgsConstructor
 @EqualsAndHashCode
+@Getter
 class Field {
 
     private int column;

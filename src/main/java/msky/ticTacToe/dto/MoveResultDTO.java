@@ -1,13 +1,5 @@
 package msky.ticTacToe.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-
-@Builder
-@Getter
-@EqualsAndHashCode
-public class MoveResultDTO {
-
-    private PlayerDTO nextPlayer;
+public enum MoveResultDTO {
+    NEXT_TURN, WIN
 }
