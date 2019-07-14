@@ -52,3 +52,28 @@ class HorizontalLineRightsideDirection implements  WinCondition {
                 .collect(Collectors.toList());
     }
 }
+
+class DiagonalLineDownsideDirection implements  WinCondition {
+
+    private int length;
+
+    DiagonalLineDownsideDirection(int length) {
+        this.length = length;
+    }
+
+    public Collection<Collection<Field>> getWinningCombinationsFor(Field field) {
+        return Arrays.asList(getRequiredCombinationDownsideRight(field), getRequiredCombinationDownsideLeft(field));
+    }
+
+    private Collection<Field> getRequiredCombinationDownsideRight(Field startField) {
+        return IntStream.range(0, length)
+                .mapToObj(i -> new Field(startField.getColumn() + i, startField.getRow() - i))
+                .collect(Collectors.toList());
+    }
+
+    private Collection<Field> getRequiredCombinationDownsideLeft(Field startField) {
+        return IntStream.range(0, length)
+                .mapToObj(i -> new Field(startField.getColumn() - i, startField.getRow() - i))
+                .collect(Collectors.toList());
+    }
+}

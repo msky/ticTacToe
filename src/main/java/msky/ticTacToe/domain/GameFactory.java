@@ -35,7 +35,8 @@ class GameFactory {
                 players.stream().map(Player::fromDto)
                         .collect(Collectors.toList()),
                 Arrays.asList(new VerticalLineDownsideDirection(3),
-                        new HorizontalLineRightsideDirection(3)));
+                        new HorizontalLineRightsideDirection(3),
+                        new DiagonalLineDownsideDirection(3)));
     }
 
     private boolean isOnePlayerPerSymbol(List<PlayerDTO> players) {
