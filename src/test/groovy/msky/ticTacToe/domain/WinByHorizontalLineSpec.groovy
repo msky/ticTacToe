@@ -31,7 +31,7 @@ class WinByHorizontalLineSpec extends  Specification {
             markOAt(1,2)
             markXAt(2,1)
 
-        when: "player O make move at 2,2"
+        when: "player O makes move at 2,2"
             MoveResultDTO result = markOAt(2,2)
         then: "player O won"
             result == MoveResultDTO.WIN
@@ -50,7 +50,7 @@ class WinByHorizontalLineSpec extends  Specification {
             markOAt(1,2)
             markXAt(2,1)
 
-        when: "player O make move at 0,2"
+        when: "player O makes move at 0,2"
             MoveResultDTO result = markOAt(0,2)
         then: "player O won"
             result == MoveResultDTO.WIN
@@ -69,7 +69,7 @@ class WinByHorizontalLineSpec extends  Specification {
             markOAt(2,2)
             markXAt(2,1)
 
-        when: "player O make move at 1,2"
+        when: "player O makes move at 1,2"
             MoveResultDTO result = markOAt(1,2)
         then: "player X won"
             result == MoveResultDTO.WIN

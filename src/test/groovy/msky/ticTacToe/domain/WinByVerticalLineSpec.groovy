@@ -32,7 +32,7 @@ class WinByVerticalLineSpec extends Specification {
             markXAt(0,1)
             markOAt(2,1)
 
-        when: "player X make move at 0,0 "
+        when: "player X makes move at 0,0 "
             MoveResultDTO result = markXAt(0, 0)
         then: "player X won"
             result == MoveResultDTO.WIN
@@ -51,7 +51,7 @@ class WinByVerticalLineSpec extends Specification {
             markXAt(0,1)
             markOAt(2,1)
 
-        when: "player X make move at 0,2 "
+        when: "player X makes move at 0,2 "
             MoveResultDTO result = markXAt(0, 2)
         then: "player X won"
             result == MoveResultDTO.WIN
@@ -70,7 +70,7 @@ class WinByVerticalLineSpec extends Specification {
             markXAt(0,2)
             markOAt(2,1)
 
-        when: "player X make move at 0,1 "
+        when: "player X makes move at 0,1 "
             MoveResultDTO result = markXAt(0, 1)
         then: "player X won"
             result == MoveResultDTO.WIN
