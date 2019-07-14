@@ -44,6 +44,11 @@ class Board {
     boolean meetAny(Collection<WinCondition> winConditions) {
         return marks.meetAny(winConditions);
     }
+
+    boolean allFieldsAreMarked() {
+        int numberOfFields = columns * rows;
+        return  numberOfFields == marks.count();
+    }
 }
 
 class Marks {
@@ -72,6 +77,8 @@ class Marks {
         return winConditions.stream()
                 .anyMatch(winCondition -> isAnyCombinationForConditionAvailable(winCondition));
     }
+
+    int count() { return marks.size(); }
 
     private boolean isAnyCombinationForConditionAvailable(WinCondition winCondition) {
         return marks.entrySet().stream()

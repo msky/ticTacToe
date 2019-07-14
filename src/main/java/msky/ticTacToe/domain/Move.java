@@ -30,7 +30,7 @@ class Move {
 }
 
 enum MoveResult {
-    NEXT_TURN, WIN;
+    NEXT_TURN, WIN, DRAW;
 
     public MoveResultDTO dto() {
         return MoveResultDTO.valueOf(name());

@@ -44,6 +44,8 @@ class Game {
         // TODO: we can check the win conditions only for last marked field
         if (board.meetAny(winConditions)) {
             return MoveResult.WIN;
+        } else if (board.allFieldsAreMarked()) {
+            return MoveResult.DRAW;
         } else {
             players.switchTurn();
             return MoveResult.NEXT_TURN;
