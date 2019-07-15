@@ -123,6 +123,29 @@ class MakingMoveSpec extends Specification {
             e.message == "The game is over, you can no longer make any moves"
     }
 
+    def "move cannot be made in a game that ended with a draw"() {
+        given: "game ended with a draw with board like " +
+                "2  X | O | X  " +
+                "1  X | X | O " +
+                "0  O | X | O  " +
+                "   0 | 1 | 2 "
+            GameDTO game = createSample3x3Game()
+            markXAt(game, 0, 1)
+            markOAt(game, 0, 0)
+            markXAt(game, 0, 2)
+            markOAt(game, 1, 2)
+            markXAt(game, 1, 1)
+            markOAt(game, 2, 0)
+            markXAt(game, 1, 0)
+            markOAt(game, 2, 1)
+            markXAt(game, 2, 2)
+        when: "player X is trying to mark some random field"
+            markXAt(game, 1, 0)
+        then: "an exception is thrown"
+            Exception e = thrown(IllegalMoveException)
+            e.message == "The game is over, you can no longer make any moves"
+    }
+
     private GameStateDTO markXAt(GameDTO game, int column, int row) {
         return facade.make(MoveDTO.builder()
                 .gameId(game.id)
