@@ -3,7 +3,7 @@ package msky.ticTacToe.domain
 import msky.ticTacToe.dto.FieldDTO
 import msky.ticTacToe.dto.GameDTO
 import msky.ticTacToe.dto.MoveDTO
-import msky.ticTacToe.dto.MoveResultDTO
+import msky.ticTacToe.dto.GameStateDTO
 import msky.ticTacToe.dto.PlayerDTO
 import spock.lang.Specification
 
@@ -33,9 +33,9 @@ class WinDyDiagonalLineSpec extends Specification {
             markXAt(2,1)
 
         when: "player O makes move at 2,0 "
-            MoveResultDTO result = markOAt(1, 1)
+            GameStateDTO result = markOAt(1, 1)
         then: "player O won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking 3rd field at the right bottom of right-side-down directed diagonal line ends the game" () {
@@ -52,9 +52,9 @@ class WinDyDiagonalLineSpec extends Specification {
             markXAt(2,1)
 
         when: "player O makes move at 2,0 "
-            MoveResultDTO result = markOAt(2, 0)
+            GameStateDTO result = markOAt(2, 0)
         then: "player O won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking 3rd field at the left-top corner of right-side-down directed diagonal line ends the game" () {
@@ -71,9 +71,9 @@ class WinDyDiagonalLineSpec extends Specification {
             markXAt(2,1)
 
         when: "player O makes move at 0,2 "
-            MoveResultDTO result = markOAt(0, 2)
+            GameStateDTO result = markOAt(0, 2)
         then: "player O won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking field in the middle of left-side-down directed diagonal line ends the game" () {
@@ -90,9 +90,9 @@ class WinDyDiagonalLineSpec extends Specification {
             markOAt(2,0)
 
         when: "player X makes move at 1,1"
-            MoveResultDTO result = markXAt(1, 1)
+            GameStateDTO result = markXAt(1, 1)
         then: "player X won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking field in the at the top of left-side-down directed diagonal line ends the game" () {
@@ -109,9 +109,9 @@ class WinDyDiagonalLineSpec extends Specification {
             markOAt(2,0)
 
         when: "player X makes move at 2,2"
-            MoveResultDTO result = markXAt(2,2)
+            GameStateDTO result = markXAt(2,2)
         then: "player X won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking field in the at the bottom of left-side-down directed diagonal line ends the game" () {
@@ -128,16 +128,16 @@ class WinDyDiagonalLineSpec extends Specification {
             markOAt(2,0)
 
         when: "player X makes move at 0,0"
-            MoveResultDTO result = markXAt(0, 0)
+            GameStateDTO result = markXAt(0, 0)
         then: "player X won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
-    private MoveResultDTO markOAt(int column, int row) {
+    private GameStateDTO markOAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerO).markedField(new FieldDTO(column, row)).build())
     }
 
-    private MoveResultDTO markXAt(int column, int row) {
+    private GameStateDTO markXAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerX).markedField(new FieldDTO(column, row)).build())
     }
 

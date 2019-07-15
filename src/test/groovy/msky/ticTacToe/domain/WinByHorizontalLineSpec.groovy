@@ -3,7 +3,7 @@ package msky.ticTacToe.domain
 import msky.ticTacToe.dto.FieldDTO
 import msky.ticTacToe.dto.GameDTO
 import msky.ticTacToe.dto.MoveDTO
-import msky.ticTacToe.dto.MoveResultDTO
+import msky.ticTacToe.dto.GameStateDTO
 import msky.ticTacToe.dto.PlayerDTO
 import spock.lang.Specification
 
@@ -32,9 +32,9 @@ class WinByHorizontalLineSpec extends  Specification {
             markXAt(2,1)
 
         when: "player O makes move at 2,2"
-            MoveResultDTO result = markOAt(2,2)
+            GameStateDTO result = markOAt(2,2)
         then: "player O won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking 3rd field at the left end of horizontal line ends the game" () {
@@ -51,9 +51,9 @@ class WinByHorizontalLineSpec extends  Specification {
             markXAt(2,1)
 
         when: "player O makes move at 0,2"
-            MoveResultDTO result = markOAt(0,2)
+            GameStateDTO result = markOAt(0,2)
         then: "player O won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking 3rd field in the middle of horizontal line ends the game" () {
@@ -70,17 +70,17 @@ class WinByHorizontalLineSpec extends  Specification {
             markXAt(2,1)
 
         when: "player O makes move at 1,2"
-            MoveResultDTO result = markOAt(1,2)
+            GameStateDTO result = markOAt(1,2)
         then: "player X won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
 
-    private MoveResultDTO markOAt(int column, int row) {
+    private GameStateDTO markOAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerO).markedField(new FieldDTO(column, row)).build())
     }
 
-    private MoveResultDTO markXAt(int column, int row) {
+    private GameStateDTO markXAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerX).markedField(new FieldDTO(column, row)).build())
     }
 

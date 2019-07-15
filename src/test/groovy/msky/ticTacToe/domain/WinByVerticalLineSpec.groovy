@@ -3,7 +3,7 @@ package msky.ticTacToe.domain
 import msky.ticTacToe.dto.FieldDTO
 import msky.ticTacToe.dto.GameDTO
 import msky.ticTacToe.dto.MoveDTO
-import msky.ticTacToe.dto.MoveResultDTO
+import msky.ticTacToe.dto.GameStateDTO
 import msky.ticTacToe.dto.PlayerDTO
 import spock.lang.Specification
 
@@ -33,9 +33,9 @@ class WinByVerticalLineSpec extends Specification {
             markOAt(2,1)
 
         when: "player X makes move at 0,0 "
-            MoveResultDTO result = markXAt(0, 0)
+            GameStateDTO result = markXAt(0, 0)
         then: "player X won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking 3rd field at the top of vertical line ends the game" () {
@@ -52,9 +52,9 @@ class WinByVerticalLineSpec extends Specification {
             markOAt(2,1)
 
         when: "player X makes move at 0,2 "
-            MoveResultDTO result = markXAt(0, 2)
+            GameStateDTO result = markXAt(0, 2)
         then: "player X won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
     def "marking 3rd field at the middle of vertical line ends the game" () {
@@ -71,16 +71,16 @@ class WinByVerticalLineSpec extends Specification {
             markOAt(2,1)
 
         when: "player X makes move at 0,1 "
-            MoveResultDTO result = markXAt(0, 1)
+            GameStateDTO result = markXAt(0, 1)
         then: "player X won"
-            result == MoveResultDTO.WIN
+            result == GameStateDTO.WIN
     }
 
-    private MoveResultDTO markOAt(int column, int row) {
+    private GameStateDTO markOAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerO).markedField(new FieldDTO(column, row)).build())
     }
 
-    private MoveResultDTO markXAt(int column, int row) {
+    private GameStateDTO markXAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerX).markedField(new FieldDTO(column, row)).build())
     }
 

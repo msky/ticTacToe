@@ -1,10 +1,13 @@
 package msky.ticTacToe.domain;
 
 import msky.ticTacToe.dto.GameDTO;
+import msky.ticTacToe.dto.GameStateDTO;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static msky.ticTacToe.domain.State.*;
 
 class Game {
 
@@ -16,11 +19,14 @@ class Game {
 
     private Collection<WinCondition> winConditions;
 
+    private State state;
+
     Game(String id, int columns, int rows, List<Player> players, Collection<WinCondition> winConditions) {
         this.id = id;
         this.board = new Board(columns, rows);
         this.players = new Players(players);
         this.winConditions = new ArrayList<>(winConditions);
+        this.state = WAITING_FOR_NEXT_TURN;
     }
 
     GameDTO dto() {
@@ -31,7 +37,10 @@ class Game {
                 .build();
     }
 
-    MoveResult make(Move move) {
+    State make(Move move) {
+        if (isOver()) {
+            throw new IllegalMoveException("The game is over, you can no longer make any moves");
+        }
         if (players.isNext(move.isMadeBy()) == false) {
             throw new IllegalMoveException("It's not your turn!");
         }
@@ -42,12 +51,26 @@ class Game {
 
         // TODO: we can check the win conditions only for last marked field
         if (board.meetsAny(winConditions)) {
-            return MoveResult.WIN;
+            state = WIN;
         } else if (board.allFieldsAreMarked()) {
-            return MoveResult.DRAW;
+            state = DRAW;
         } else {
             players.switchTurn();
-            return MoveResult.NEXT_TURN;
         }
+
+        return state;
+    }
+
+    private boolean isOver() {
+        return state != WAITING_FOR_NEXT_TURN;
+    }
+
+}
+
+enum State {
+    WAITING_FOR_NEXT_TURN, WIN, DRAW;
+
+    public GameStateDTO dto() {
+        return GameStateDTO.valueOf(name());
     }
 }

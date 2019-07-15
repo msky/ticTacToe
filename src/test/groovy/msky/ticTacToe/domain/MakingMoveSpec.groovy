@@ -104,6 +104,39 @@ class MakingMoveSpec extends Specification {
             thrown IllegalMoveException
     }
 
+    def "move cannot be made in a game that is already won by someone"() {
+        given: "game won by player X with some free field and board like " +
+                "2  X | O |   " +
+                "1  X |   | O " +
+                "0  X |   |   " +
+                "   0 | 1 | 2 "
+            GameDTO game = createSample3x3Game()
+            markXAt(game, 0, 0)
+            markOAt(game, 1, 2)
+            markXAt(game, 0, 1)
+            markOAt(game, 2, 1)
+            markXAt(game, 0, 2)
+        when: "player O is trying to mark free field"
+            markOAt(game, 1, 0)
+        then: "an exception is thrown"
+            Exception e = thrown(IllegalMoveException)
+            e.message == "The game is over, you can no longer make any moves"
+    }
+
+    private GameStateDTO markXAt(GameDTO game, int column, int row) {
+        return facade.make(MoveDTO.builder()
+                .gameId(game.id)
+                .markedField(new FieldDTO(column, row))
+                .madeBy(testData.playerX).build())
+    }
+
+    private GameStateDTO markOAt(GameDTO game, int column, int row) {
+        return facade.make(MoveDTO.builder()
+                .gameId(game.id)
+                .markedField(new FieldDTO(column, row))
+                .madeBy(testData.playerO).build())
+    }
+
     private GameDTO createSample3x3Game(List<PlayerDTO> players = testData.samplePlayers()) {
         facade.createNewGame(players)
     }

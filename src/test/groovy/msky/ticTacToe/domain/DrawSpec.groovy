@@ -3,7 +3,7 @@ package msky.ticTacToe.domain
 import msky.ticTacToe.dto.FieldDTO
 import msky.ticTacToe.dto.GameDTO
 import msky.ticTacToe.dto.MoveDTO
-import msky.ticTacToe.dto.MoveResultDTO
+import msky.ticTacToe.dto.GameStateDTO
 import msky.ticTacToe.dto.PlayerDTO
 import spock.lang.Specification
 
@@ -37,16 +37,16 @@ class DrawSpec extends Specification {
             markOAt(2,1)
 
         when: "player X makes move at 2,2"
-            MoveResultDTO result = markXAt(2,2)
+            GameStateDTO result = markXAt(2,2)
         then: "game ands with a draw"
-            result == MoveResultDTO.DRAW
+            result == GameStateDTO.DRAW
     }
 
-    private MoveResultDTO markOAt(int column, int row) {
+    private GameStateDTO markOAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerO).markedField(new FieldDTO(column, row)).build())
     }
 
-    private MoveResultDTO markXAt(int column, int row) {
+    private GameStateDTO markXAt(int column, int row) {
         return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerX).markedField(new FieldDTO(column, row)).build())
     }
 
