@@ -2,7 +2,6 @@ package msky.ticTacToe.domain;
 
 import msky.ticTacToe.dto.GameDTO;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,7 +41,7 @@ class Game {
         board.mark(move.getMarkedField(), move.madeWith());
 
         // TODO: we can check the win conditions only for last marked field
-        if (board.meetAny(winConditions)) {
+        if (board.meetsAny(winConditions)) {
             return MoveResult.WIN;
         } else if (board.allFieldsAreMarked()) {
             return MoveResult.DRAW;
@@ -50,6 +49,5 @@ class Game {
             players.switchTurn();
             return MoveResult.NEXT_TURN;
         }
-
     }
 }

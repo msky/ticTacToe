@@ -41,7 +41,7 @@ class Board {
         return marks.contains(field);
     }
 
-    boolean meetAny(Collection<WinCondition> winConditions) {
+    boolean meetsAny(Collection<WinCondition> winConditions) {
         return marks.meetAny(winConditions);
     }
 
