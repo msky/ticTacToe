@@ -16,4 +16,8 @@ public class GameDTO {
     private BoardDTO board;
 
     private List<PlayerDTO> turns;
+
+    private PlayerDTO winner;
+
+    private GameStateDTO state;
 }

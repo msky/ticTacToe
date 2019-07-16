@@ -21,6 +21,8 @@ class Game {
 
     private State state;
 
+    private Player winner;
+
     Game(String id, int columns, int rows, List<Player> players, Collection<WinCondition> winConditions) {
         this.id = id;
         this.board = new Board(columns, rows);
@@ -34,6 +36,8 @@ class Game {
                 .board(board.dto())
                 .id(id)
                 .turns(players.currentTurnsOrder())
+                .winner(winner != null ? winner.dto(): null)
+                .state(state.dto())
                 .build();
     }
 
@@ -52,6 +56,7 @@ class Game {
         // TODO: we can check the win conditions only for last marked field
         if (board.meetsAny(winConditions)) {
             state = WIN;
+            winner = move.isMadeBy();
         } else if (board.allFieldsAreMarked()) {
             state = DRAW;
         } else {
