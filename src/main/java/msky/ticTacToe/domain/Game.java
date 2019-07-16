@@ -42,21 +42,13 @@ class Game {
     }
 
     State make(Move move) {
-        if (isOver()) {
-            throw new IllegalMoveException("The game is over, you can no longer make any moves");
-        }
-        if (players.isNext(move.isMadeBy()) == false) {
-            throw new IllegalMoveException("It's not your turn!");
-        }
-        if (board.isMarked(move.getMarkedField())) {
-            throw new IllegalMoveException("Field already marked!");
-        }
+        validate(move);
         board.mark(move.getMarkedField(), move.madeWith());
 
         // TODO: we can check the win conditions only for last marked field
         if (board.meetsAny(winConditions)) {
             state = WIN;
-            winner = move.isMadeBy();
+            winner = move.getPlayer();
         } else if (board.allFieldsAreMarked()) {
             state = DRAW;
         } else {
@@ -64,6 +56,18 @@ class Game {
         }
 
         return state;
+    }
+
+    private void validate(Move move) {
+        if (isOver()) {
+            throw new IllegalMoveException("The game is over, you can no longer make any moves");
+        }
+        if (move.isMadeBy(players.checkNext()) == false) {
+            throw new IllegalMoveException("It's not your turn!");
+        }
+        if (board.isMarked(move.getMarkedField())) {
+            throw new IllegalMoveException("Field already marked!");
+        }
     }
 
     private boolean isOver() {

@@ -25,10 +25,6 @@ class Players {
         queue.add(queue.poll());
     }
 
-    boolean isNext(Player player) {
-        return checkNext().equals(player);
-    }
-
     List<PlayerDTO> currentTurnsOrder() {
         return queue.stream().map(Player::dto).collect(Collectors.toList());
     }
