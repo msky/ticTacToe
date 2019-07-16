@@ -10,7 +10,6 @@ import msky.ticTacToe.dto.MarkDTO;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class Board {
@@ -21,9 +20,9 @@ class Board {
 
     private Marks marks = new Marks();
 
-    Board(int columns, int rows) {
-        this.columns = columns;
-        this.rows = rows;
+    Board(BoardSize setup) {
+        this.columns = setup.getColumns();
+        this.rows = setup.getRows();
     }
 
     BoardDTO dto() {
@@ -47,8 +46,16 @@ class Board {
 
     boolean allFieldsAreMarked() {
         int numberOfFields = columns * rows;
-        return  numberOfFields == marks.count();
+        return numberOfFields == marks.count();
     }
+}
+
+@Getter
+@AllArgsConstructor
+class BoardSize {
+    private int columns;
+
+    private int rows;
 }
 
 class Marks {
@@ -78,7 +85,9 @@ class Marks {
                 .anyMatch(winCondition -> isAnyCombinationForConditionAvailable(winCondition));
     }
 
-    int count() { return marks.size(); }
+    int count() {
+        return marks.size();
+    }
 
     private boolean isAnyCombinationForConditionAvailable(WinCondition winCondition) {
         return marks.entrySet().stream()

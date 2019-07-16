@@ -30,8 +30,7 @@ class GameFactory {
         }
 
         return new Game(idGenerator.generate(),
-                DEFAULT_COLUMNS,
-                DEFAULT_ROWS,
+                new BoardSize(DEFAULT_COLUMNS, DEFAULT_ROWS),
                 players.stream().map(Player::fromDto)
                         .collect(Collectors.toList()),
                 Arrays.asList(new VerticalLineDownsideDirection(3),

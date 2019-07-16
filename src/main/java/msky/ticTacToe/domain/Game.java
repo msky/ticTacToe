@@ -23,9 +23,9 @@ class Game {
 
     private Player winner;
 
-    Game(String id, int columns, int rows, List<Player> players, Collection<WinCondition> winConditions) {
+    Game(String id, BoardSize size, List<Player> players, Collection<WinCondition> winConditions) {
         this.id = id;
-        this.board = new Board(columns, rows);
+        this.board = new Board(size);
         this.players = new Players(players);
         this.winConditions = new ArrayList<>(winConditions);
         this.state = WAITING_FOR_NEXT_TURN;
