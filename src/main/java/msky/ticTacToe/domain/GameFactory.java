@@ -33,9 +33,13 @@ class GameFactory {
                 new BoardSize(DEFAULT_COLUMNS, DEFAULT_ROWS),
                 players.stream().map(Player::fromDto)
                         .collect(Collectors.toList()),
-                Arrays.asList(new VerticalLineDownsideDirection(3),
-                        new HorizontalLineRightsideDirection(3),
-                        new DiagonalLineDownsideDirection(3)));
+                defaultWinConditions());
+    }
+
+    private List<WinCondition> defaultWinConditions() {
+        return Arrays.asList(new VerticalLineDownsideDirection(3),
+                new HorizontalLineRightsideDirection(3),
+                new DiagonalLineDownsideDirection(3));
     }
 
     private boolean isOnePlayerPerSymbol(List<PlayerDTO> players) {
