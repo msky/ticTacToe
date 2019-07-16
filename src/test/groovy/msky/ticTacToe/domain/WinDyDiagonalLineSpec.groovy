@@ -134,11 +134,11 @@ class WinDyDiagonalLineSpec extends Specification {
     }
 
     private GameStateDTO markOAt(int column, int row) {
-        return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerO).markedField(new FieldDTO(column, row)).build())
+        return facade.make(MoveDTO.builder().madeBy(playerO).markedField(new FieldDTO(column, row)).build(), game.id)
     }
 
     private GameStateDTO markXAt(int column, int row) {
-        return facade.make(MoveDTO.builder().gameId(game.id).madeBy(playerX).markedField(new FieldDTO(column, row)).build())
+        return facade.make(MoveDTO.builder().madeBy(playerX).markedField(new FieldDTO(column, row)).build(), game.id)
     }
 
     private GameDTO createSample3x3Game(List<PlayerDTO> players = testData.samplePlayers()) {

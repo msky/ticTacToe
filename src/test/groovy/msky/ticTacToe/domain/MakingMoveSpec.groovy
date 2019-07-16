@@ -15,12 +15,11 @@ class MakingMoveSpec extends Specification {
             PlayerDTO nextPlayer = game.turns[0]
             FieldDTO field = new FieldDTO(column, row)
             MoveDTO move = MoveDTO.builder()
-                            .gameId(game.id)
                             .madeBy(nextPlayer)
                             .markedField(field)
                             .build()
         expect: "mark can be made on any field of the board"
-            facade.make(move)
+            facade.make(move, game.id)
             Collection<MarkDTO> markedFields = facade.load(game.id).board.marks
             markedFields.contains(MarkDTO.builder()
                                     .on(field)
@@ -47,10 +46,9 @@ class MakingMoveSpec extends Specification {
             GameDTO game = createSample3x3Game([firstPlayer, secondPlayer])
         when: "move is made by first player "
             facade.make(MoveDTO.builder()
-                        .gameId(game.id)
                         .madeBy(firstPlayer)
                         .markedField(new FieldDTO(0,0))
-                        .build())
+                        .build(), game.id)
         then: "second player moves next"
             List<PlayerDTO> turns = facade.load(game.id).turns
             PlayerDTO nextPlayer = turns[0]
@@ -64,18 +62,16 @@ class MakingMoveSpec extends Specification {
             GameDTO game = createSample3x3Game([firstPlayer, secondPlayer])
         when: "move is made by first player twice "
             MoveDTO firstMove = MoveDTO.builder()
-                .gameId(game.id)
                 .madeBy(firstPlayer)
                 .markedField(new FieldDTO(0, 0))
                 .build()
-            facade.make(firstMove)
+            facade.make(firstMove, game.id)
 
             MoveDTO secondMove = MoveDTO.builder()
-                .gameId(game.id)
                 .madeBy(firstPlayer)
                 .markedField(new FieldDTO(1, 0))
                 .build()
-            facade.make(secondMove)
+            facade.make(secondMove, game.id)
         then: "an exception is thrown"
             thrown IllegalMoveException
     }
@@ -88,18 +84,16 @@ class MakingMoveSpec extends Specification {
 
             FieldDTO field = new FieldDTO(0, 0)
             MoveDTO firstMove = MoveDTO.builder()
-                .gameId(game.id)
                 .madeBy(firstPlayer)
                 .markedField(field)
                 .build()
-            facade.make(firstMove)
+            facade.make(firstMove, game.id)
         when: "second player is trying to mark already marked field"
             MoveDTO secondMove = MoveDTO.builder()
-                    .gameId(game.id)
                     .madeBy(secondPlayer)
                     .markedField(field)
                     .build()
-            facade.make(secondMove)
+            facade.make(secondMove, game.id)
         then: "an exception is thrown"
             thrown IllegalMoveException
     }
@@ -148,16 +142,14 @@ class MakingMoveSpec extends Specification {
 
     private GameStateDTO markXAt(GameDTO game, int column, int row) {
         return facade.make(MoveDTO.builder()
-                .gameId(game.id)
                 .markedField(new FieldDTO(column, row))
-                .madeBy(testData.playerX).build())
+                .madeBy(testData.playerX).build(), game.id)
     }
 
     private GameStateDTO markOAt(GameDTO game, int column, int row) {
         return facade.make(MoveDTO.builder()
-                .gameId(game.id)
                 .markedField(new FieldDTO(column, row))
-                .madeBy(testData.playerO).build())
+                .madeBy(testData.playerO).build(), game.id)
     }
 
     private GameDTO createSample3x3Game(List<PlayerDTO> players = testData.samplePlayers()) {

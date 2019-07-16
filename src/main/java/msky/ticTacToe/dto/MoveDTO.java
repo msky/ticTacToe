@@ -9,8 +9,6 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class MoveDTO {
 
-    private String gameId;
-
     private PlayerDTO madeBy;
 
     private FieldDTO markedField;

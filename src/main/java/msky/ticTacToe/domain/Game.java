@@ -36,7 +36,7 @@ class Game {
                 .board(board.dto())
                 .id(id)
                 .turns(players.currentTurnsOrder())
-                .winner(winner != null ? winner.dto(): null)
+                .winner(winner != null ? winner.dto() : null)
                 .state(state.dto())
                 .build();
     }
