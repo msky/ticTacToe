@@ -6,6 +6,7 @@ class GameConfiguration {
 
     GameFacade gameFacade() {
         return new GameFacade(new GameFactory(() -> UUID.randomUUID().toString()),
-                new InMemoryGameRepository());
+                new InMemorySetupRepository(),
+                new InMemoryMoveRepository());
     }
 }

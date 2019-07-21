@@ -29,7 +29,13 @@ class GameFactory {
             throw new IllegalSetupException("Standard game can only be played by 2 players!");
         }
 
-        return new Game(idGenerator.generate(),
+        String id = idGenerator.generate();
+
+        return createStandardGame(id, players);
+    }
+
+    Game createStandardGame(String id, List<PlayerDTO> players) {
+        return new Game(id,
                 new BoardSize(DEFAULT_COLUMNS, DEFAULT_ROWS),
                 players.stream().map(Player::fromDto)
                         .collect(Collectors.toList()),

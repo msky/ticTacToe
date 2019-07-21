@@ -13,22 +13,40 @@ public class GameFacade {
 
     private GameFactory factory;
 
-    private GameRepository gameRepository;
+    private SetupRepository setupRepository;
+
+    private MoveRepository moveRepository;
 
     public GameDTO createNewGame(List<PlayerDTO> players) {
-        Game newGame = this.factory.createStandardGame(players);
-        return gameRepository.save(newGame).dto();
+        GameDTO game = factory.createStandardGame(players).dto();
+        setupRepository.save(new GameSetup(game.getId(), players));
+
+        return game;
     }
 
     public GameDTO load(String gameId) {
         // TODO: findOrThrow?
-        return gameRepository.findById(gameId).dto();
+        Game game = rebuild(gameId);
+
+        return game.dto();
+
     }
 
-    public GameStateDTO make(MoveDTO move, String gameId) {
-        Game game = gameRepository.findById(gameId);
-        State result = game.make(Move.fromDto(move));
-        gameRepository.save(game);
+    private Game rebuild(String gameId) {
+        GameSetup setup = setupRepository.findById(gameId);
+        Game game = factory.createStandardGame(gameId, setup.getPlayers());
+        moveRepository.getAllFor(gameId).stream().forEach(move -> game.make(move));
+
+        return game;
+    }
+
+    public GameStateDTO make(MoveDTO moveDTO, String gameId) {
+        Game game = rebuild(gameId);
+        Move move = Move.fromDto(moveDTO);
+        State result = game.make(move);
+
+        moveRepository.save(move, gameId);
+
         return result.dto();
     }
 }
