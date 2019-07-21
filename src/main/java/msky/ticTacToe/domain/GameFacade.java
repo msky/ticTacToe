@@ -17,7 +17,7 @@ public class GameFacade {
 
     private MoveRepository moveRepository;
 
-    public GameDTO createNewGame(List<PlayerDTO> players) {
+    public GameDTO startNewGame(List<PlayerDTO> players) {
         GameDTO game = factory.createStandardGame(players).dto();
         setupRepository.save(new GameSetup(game.getId(), players));
 

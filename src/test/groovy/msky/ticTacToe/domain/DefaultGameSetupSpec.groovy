@@ -22,7 +22,7 @@ class DefaultGameSetupSpec extends Specification {
 
     def "default game cannot be created for players number different than 2"() {
         when: "creating game with number of players != 2"
-            facade.createNewGame(players)
+            facade.startNewGame(players)
         then: "an exception is thrown"
             thrown IllegalSetupException
         where:
@@ -33,7 +33,7 @@ class DefaultGameSetupSpec extends Specification {
     }
 
     private GameDTO createSampleGame() {
-        facade.createNewGame(testData.samplePlayers())
+        facade.startNewGame(testData.samplePlayers())
     }
 
 }

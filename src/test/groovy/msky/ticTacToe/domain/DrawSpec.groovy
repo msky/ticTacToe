@@ -51,6 +51,6 @@ class DrawSpec extends Specification {
     }
 
     private GameDTO createSample3x3Game(List<PlayerDTO> players = testData.samplePlayers()) {
-        facade.createNewGame(players)
+        facade.startNewGame(players)
     }
 }

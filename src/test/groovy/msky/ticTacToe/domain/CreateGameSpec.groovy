@@ -30,7 +30,7 @@ class CreateGameSpec extends Specification {
             List<PlayerDTO> players = players()
             PlayerDTO firstPlayer = players[0]
         when: "we create a new game"
-            GameDTO game = facade.createNewGame(players)
+            GameDTO game = facade.startNewGame(players)
         then: "first player on a given list moves first"
             game.turns[0] == firstPlayer
     }
@@ -40,7 +40,7 @@ class CreateGameSpec extends Specification {
             PlayerDTO firstPlayerWithX = new PlayerDTO("player1", SymbolDTO.X)
             PlayerDTO secondPlayerWithX = new PlayerDTO("player2", SymbolDTO.X)
         when: "we create a new game"
-            facade.createNewGame([firstPlayerWithX, secondPlayerWithX])
+            facade.startNewGame([firstPlayerWithX, secondPlayerWithX])
         then: "an exception is thrown"
             thrown IllegalSetupException
     }
@@ -51,6 +51,6 @@ class CreateGameSpec extends Specification {
 
     private GameDTO createSampleGame() {
         List<PlayerDTO> players = testData.samplePlayers()
-        facade.createNewGame(players)
+        facade.startNewGame(players)
     }
 }
